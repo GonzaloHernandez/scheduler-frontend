@@ -1,6 +1,7 @@
 import React from "react";
 import "./Schedule.css";
 import Cell from "./Cell"
+
 // import axios from "axios"
 
 const days      = [ "Monday","Tuesday","Wednesday","Thursday","Friday","Saturday" ]
@@ -9,7 +10,9 @@ const houres    = [ "06 - 07","07 - 08","08 - 09","09 - 10","10 - 11","11 - 12",
 
 class Schedule extends React.Component {
     state = {
-        session: ""
+        session: "",
+        dragging: false,
+        select: false
     }
     //-------------------------------------------------------------
     componentDidMount() {
@@ -20,37 +23,36 @@ class Schedule extends React.Component {
         // .catch( err => {
         //     console.log("Recovery failure")            
         // })
-        const data = "0011110011110000 0000110000110000 0000000000000000 0000000000000000 0011000000001100"
+        const data = "0011110011110000000011000011000000000000000000000000000000000000001100000000110000000000000000000000000000000000"
         this.setState({session: data})
     }
     //-------------------------------------------------------------
     render() {
-        const weekday = this.state.session.split(" ")
-
-        let matrix = [
-            weekday[0].split(""),
-            weekday[1].split(""),
-            weekday[2].split(""),
-            weekday[3].split(""),
-            weekday[4].split(""),
-            weekday[5].split("")
-        ]
-
+        const data = "0011110011110000000011000011000000000000000000000000000000000000001100000000110000000000000000000000000000000000"
+        let matrix = Array(7).fill().map(()=>Array(16).fill())
+        let i=0
+        for (let d=0; d<7; d++) {
+            for (let h=0; h<16; h++) {
+                matrix[d][h] = parseInt(data[i++])
+            }
+        }
 
         return (
             <div>
                 <table>
                     <tr>
-                        <td></td>
+                        <td>{matrix[0][3]}</td>
                         {days.map(d => <td>{d}</td>)}
                     </tr>
                     {houres.map( (h,hi) => <tr>
                         <td>{h}</td> 
                         {days.map((d,di) => <td>
-                            {matrix[0][0]}
+                            <Cell   selected={matrix[di][hi]?true:false} 
+                                    handler={this}/>
                         </td>)}
                     </tr>)}
                 </table>
+                <button width="300px">Save changes</button>
             </div>
         );
     }
