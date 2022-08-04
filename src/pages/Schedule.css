@@ -16,7 +16,13 @@ th{
 
 td{
 	background-color:floralwhite;
-	padding: 0px}
+	padding: 0px;
+    width: 100px;
+    height: 20px;
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 14px;
+}
 
 td:nth-child(1) {
 	background-color: antiquewhite;
