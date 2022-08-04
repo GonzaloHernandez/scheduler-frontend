@@ -1,12 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-
-function Hello(props) {
-  return (
-    <h2>This project will show the scheduler interface</h2>
-  )
-}
+import Schedule from "./pages/Schedule"
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<Hello/>);
+root.render(<Schedule/>);
