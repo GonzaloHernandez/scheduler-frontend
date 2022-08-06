@@ -12,7 +12,9 @@ class Schedule extends React.Component {
     state = {
         session: "",
         dragging: false,
-        select: false
+        select: true,
+        movement: false,
+        previous: false,
     }
     //-------------------------------------------------------------
     componentDidMount() {

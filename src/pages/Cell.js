@@ -14,20 +14,31 @@ class Cell extends React.Component {
         return(
             <button
                 className={this.state.selected?"cell-on":"cell-off"}
-                onClick={(e)=>this.setState({selected: ! this.state.selected})}
+                // onClick={(e)=>this.setState({selected: ! this.state.selected})}
                 onMouseDown={(e)=>{
-                    if (this.state.selected) 
-                        this.state.handler.setState({select:false})
-                    else
-                        this.state.handler.setState({select:true})
-                    
-                    this.state.handler.setState({dragging:true})
+                    this.state.handler.setState({
+                        dragging:true,
+                        movement: false,
+                        previous:this.state.selected
+                    })
                 }}
-                onMouseUp={(e)=>this.state.handler.setState({dragging:false})}
                 onMouseMove={(e)=>{
+                    this.state.handler.setState({movement:true})
                     if (this.state.handler.state.dragging) {
                         this.setState({selected: this.state.handler.state.select})
                     }
+                }}
+                onMouseUp={(e)=>{
+                    if (!this.state.handler.state.movement) {
+                        this.setState({selected: !this.state.handler.state.previous})
+                    }
+                    this.state.handler.setState({dragging:false, movement:false})
+                }}
+                onKeyDown={(e)=>{
+                    if(e.key == 'd') this.state.handler.setState({select:false})
+                }}
+                onKeyUp={(e)=>{
+                    if(e.key == 'd') this.state.handler.setState({select:true})
                 }}
             >
             </button>
