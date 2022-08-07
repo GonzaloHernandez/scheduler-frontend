@@ -40,23 +40,21 @@ class Schedule extends React.Component {
         }
 
         return (
-            <div>
-                <table>
-                    <tr>
-                        <td>{matrix[0][3]}</td>
-                        {days.map(d => <td>{d}</td>)}
-                    </tr>
-                    {houres.map( (h,hi) => <tr>
-                        <td>{h}</td> 
-                        {days.map((d,di) => <td>
-                            <Cell   selected={matrix[di][hi]?true:false} 
-                                    handler={this}/>
-                        </td>)}
-                    </tr>)}
-                </table>
-                <button width="300px">Save changes</button>
-            </div>
-        );
+            <table>
+                <tr>
+                    <td></td>
+                    {days.map(d => <td>{d}</td>)}
+                </tr>
+                {houres.map( (h,hi) => <tr>
+                    <td>{h}</td>
+                    {days.map((d,di) => <td>
+                        <Cell
+                            selected={matrix[di][hi]?true:false} 
+                            handler={this}/>
+                    </td>)}
+                </tr>)}
+            </table>
+        )
     }
 }
 

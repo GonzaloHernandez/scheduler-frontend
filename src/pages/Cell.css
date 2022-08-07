@@ -3,6 +3,7 @@
     height: 100%;
     border: 0ch;
     background-color: beige;
+    outline: 0 !important;
 }
 
 .cell-on {
@@ -10,4 +11,5 @@
     height: 100%;
     border: 0ch;
     background-color: chocolate;
+    outline: 0 !important;
 }
