@@ -14,7 +14,6 @@ class Cell extends React.Component {
         return(
             <button
                 className={this.state.selected?"cell-on":"cell-off"}
-                // onClick={(e)=>this.setState({selected: ! this.state.selected})}
                 onMouseDown={(e)=>{
                     this.state.handler.setState({
                         dragging:true,
@@ -23,6 +22,7 @@ class Cell extends React.Component {
                     })
                 }}
                 onMouseMove={(e)=>{
+                    this.state.handler.setState({select:!e.shiftKey})
                     this.state.handler.setState({movement:true})
                     if (this.state.handler.state.dragging) {
                         this.setState({selected: this.state.handler.state.select})
@@ -33,12 +33,6 @@ class Cell extends React.Component {
                         this.setState({selected: !this.state.handler.state.previous})
                     }
                     this.state.handler.setState({dragging:false, movement:false})
-                }}
-                onKeyDown={(e)=>{
-                    if(e.key == 'd') this.state.handler.setState({select:false})
-                }}
-                onKeyUp={(e)=>{
-                    if(e.key == 'd') this.state.handler.setState({select:true})
                 }}
             >
             </button>
