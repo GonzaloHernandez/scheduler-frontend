@@ -2,7 +2,8 @@
     width: 100px;
     height: 100%;
     border: 0ch;
-    background-color: rgb(241, 245, 244);
+    /* background-color: rgb(241, 245, 244); */
+    background-color: transparent;
     outline: 0 !important;
 }
 

@@ -63,8 +63,10 @@ class Schedule extends React.Component {
             <table>
                 <tr>
                     <td rowSpan={50}>
-                        <table>
-                            {houres.map(h=><tr><td align="Right" className="houres">{h}</td></tr>)}
+                        <table className="table-houres">
+                            {houres.map(h=><tr className="tr-houres">
+                                <td align="Right" className="td-houres">{h}</td>
+                            </tr>)}
                         </table>
                     </td>
                     {days.map(d => <td>{d}</td>)}
@@ -77,7 +79,7 @@ class Schedule extends React.Component {
                             handler={this}/>
                     </td>)}
                 </tr>)}
-                <tr><td></td></tr>
+                <tr>{days.map(d => <td></td>)}</tr>
             </table>
             </div>
         )

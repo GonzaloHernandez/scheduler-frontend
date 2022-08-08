@@ -15,7 +15,7 @@ th{
 }
 
 td{
-	background-color: white;
+	background-color: rgb(220, 246, 240);
 	padding: 0px;
     height: 20px;
     text-align: center;
@@ -24,18 +24,26 @@ td{
 	color: rgb(105, 105, 105);
 }
 
-td:nth-child(1) {
-	background-color: white;
-	text-align: right;
+
+tr:nth-child(4n + 4) td,
+tr:nth-child(4n + 5) td  {
+    background-color:rgb(238, 245, 243)
 }
 
-tr:nth-child(4n + 3) td,
-tr:nth-child(4n + 4) td  {
-    border-bottom: 3px;
-}
-
-.houres {
+.td-houres {
 	font-size: 15px;
 	padding-right: 5px;
-	padding-bottom: 5px;
+	padding-bottom: 1px;
+	background-color:white;
+}
+
+.tr-houres {
+	background-color: white;
+}
+
+.tr-houres:nth-child(4n + 4) td  {
+    background-color:white
+}
+.tr-houres:nth-child(4n + 5) td  {
+    background-color:white
 }
