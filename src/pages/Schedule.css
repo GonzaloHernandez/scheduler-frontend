@@ -3,35 +3,40 @@ table {
 	border: 0px solid;
 	font-family: "Google Sans",Roboto,Arial,sans-serif;
 	font-size: 13px;
-	width: 600px;
 	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
+	height: 100%;
 }
 
 th{
 	background-color: antiquewhite;
-	padding: 5px
+	padding: 5px;
 }
 
 td{
-	background-color:floralwhite;
+	background-color: white;
 	padding: 0px;
-    width: 100px;
+    width: 800px;
     height: 20px;
     text-align: center;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 14px;
+    font-size: 18px;
+	color: rgb(105, 105, 105);
 }
 
 td:nth-child(1) {
-	background-color: antiquewhite;
+	background-color: white;
+	text-align: right;
 }
 
-.color-selected {
-    background-color: darksalmon;
+tr:nth-child(4n + 3) td,
+tr:nth-child(4n + 4) td  {
+    border-bottom: 3px;
 }
 
-.color-noselected {
-    background-color: floralwhite;
+.houres {
+	font-size: 15px;
+	padding-right: 5px;
+	padding-bottom: 5px;
 }
