@@ -59,6 +59,7 @@ class Schedule extends React.Component {
         houres[24] = "12:00 AM"
 
         return (
+            <div>
             <table>
                 <tr>
                     <td rowSpan={50}>
@@ -78,6 +79,7 @@ class Schedule extends React.Component {
                 </tr>)}
                 <tr><td></td></tr>
             </table>
+            </div>
         )
     }
 }

@@ -1,5 +1,5 @@
 .cell-off {
-    width: 100%;
+    width: 100px;
     height: 100%;
     border: 0ch;
     background-color: rgb(241, 245, 244);
@@ -7,7 +7,7 @@
 }
 
 .cell-on {
-    width: 100%;
+    width: 100px;
     height: 100%;
     border: 0ch;
     background-color: rgb(159, 194, 189);
