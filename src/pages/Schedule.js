@@ -1,27 +1,12 @@
-import React from "react";
-import "./Schedule.css";
-import Cell from "./Cell"
+import React from 'react';
+import Cell from './Cell';
 
 // import axios from "axios"
 
-const days  = [ "Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday" ]
-const cells = []
-
 class Schedule extends React.Component {
-    //-------------------------------------------------------------
     constructor(props) {
         super(props)
-        for (let i=0; i<48; i++) cells[i] = i
-        this.state = {
-            session: "",
-            dragging: false,
-            select: true,
-            movement: false,
-            previous: false,
-        }
-    }
-    //-------------------------------------------------------------
-    componentDidMount() {
+
         // axios.get("http://localhost:3001/session/1")
         // .then( res => {
         //     this.setState({ session: res.data})
@@ -29,23 +14,44 @@ class Schedule extends React.Component {
         // .catch( err => {
         //     console.log("Recovery failure")            
         // })
-        const data = "0011110011110000000011000011000000000000000000000000000000000000001100000000110000000000000000000000000000000000"
-        this.setState({session: data})
-    }
-    //-------------------------------------------------------------
-    render() {
-        const data = "0011110011110000000011000011000000000000000000000000000000000000001100000000110000000000000000000000000000000000"
-        let matrix = Array(7).fill().map(()=>Array(16).fill())
+
+        const info =
+            "000000000000000011111100000000001100000000000000" +
+            "000000000000000011000000000000000000000000000000" +
+            "000000000000000000000000000000000000000000000000" +
+            "000000000000000000111100000011110000000000000000" +
+            "000000000000000000000000000011110000000000000000" +
+            "000000000000000000000000000000000000000000000000" +
+            "000000000000000000000000000000000000000000000000"
+
+        let matrix = Array(48).fill().map(()=>Array(7).fill())
+
         let i=0
-        for (let d=0; d<days.length; d++) {
-            for (let h=0; h<16; h++) {
-                matrix[d][h] = parseInt(data[i++])
+        for (let r=0; r<48; r++) {
+            for (let c=0; c<7; c++) {
+                matrix[r][c] = parseInt(info[i++])
             }
         }
 
-        let houres = []
-        // for (let i=0; i<=24; i++) houres[i] = i.toString()+":00";
+        this.state={
+            data: matrix,
+            starting: 14,
+            size: 28,
+            // For selection activity
+            dragging: false,
+            select: true,
+            movement: false,
+            previous: false,
+        }
+    }
+    //----------------------------------------------------
+    render() {
+        const starting = this.state.starting
+        const size = this.state.size
+        const rows = Array.from(Array(size).keys())
+        const titles = ["MON","TUE","WED","THU","FRI","SAT","SUN"]
 
+        const houres = []
         houres[0] = "12:00 AM"
         for (let i= 1; i<12; i++) {
             let formatted = i.toLocaleString('en-US',{
@@ -58,30 +64,23 @@ class Schedule extends React.Component {
         houres[12] = "12:00 PM"
         houres[24] = "12:00 AM"
 
-        return (
-            <div>
+        return(
             <table>
-                <tr>
-                    <td rowSpan={50}>
-                        <table className="table-houres">
-                            {houres.map(h=><tr className="tr-houres">
-                                <td align="Right" className="td-houres">{h}</td>
-                            </tr>)}
-                        </table>
-                    </td>
-                    {days.map(d => <td>{d}</td>)}
+            <tr><th></th>{titles.map((t)=><th>{t}</th>)}</tr>
+            {rows.map((r,ri)=>{
+                return <tr>
+                <td 
+                    rowSpan={2} 
+                    hidden={r%2===1?true:false}
+                    className={r+starting<=12||r+starting>40?"night":""}>
+                    {houres[(r+starting)/2]}
+                </td>
+                {titles.map((c,ci)=>{
+                    return <Cell handler={this} r={r} c={ci}/>
+                })}
                 </tr>
-                {cells.map( (c,ci) => <tr>
-
-                    {days.map((d,di) => <td>
-                        <Cell
-                            selected={matrix[di][ci]?true:false} 
-                            handler={this}/>
-                    </td>)}
-                </tr>)}
-                <tr>{days.map(d => <td></td>)}</tr>
+            })}
             </table>
-            </div>
         )
     }
 }

@@ -1,41 +1,57 @@
-import React from "react";
-import "./Cell.css"
+import React from 'react';
 
 class Cell extends React.Component {
+    //---------------------------------------------------
     constructor(props) {
         super(props)
         this.state = {
-            selected: props.selected,
-            handler: props.handler
+            handler: props.handler,
+            r: props.r,
+            c: props.c,
         }
     }
-    //----------------------------------------------------------------
+    //---------------------------------------------------
     render() {
-        return(
-            <button
-                className={this.state.selected?"cell-on":"cell-off"}
+        const [r,c] = [this.state.r, this.state.c]
+        const handler = this.state.handler
+        const starting = handler.state.starting
+        const size = handler.state.size
+        let   data = handler.state.data
+
+        return (
+            <td
+                className={data[r+starting][c]?"cell-on":"cell-off"}
+                onWheel={(e)=>{
+                    if (e.deltaY<0 && starting>1) {
+                        handler.setState({starting: starting-2})
+                    }
+                    else if (e.deltaY>0 && starting<48-size) {
+                        handler.setState({starting: starting+2})
+                    }
+                }}
                 onMouseDown={(e)=>{
-                    this.state.handler.setState({
-                        dragging:true,
+                    handler.setState({
+                        dragging: true,
                         movement: false,
-                        previous:this.state.selected
+                        previous: data[r+starting][c]
                     })
                 }}
+
                 onMouseMove={(e)=>{
-                    this.state.handler.setState({select:!e.shiftKey})
-                    this.state.handler.setState({movement:true})
-                    if (this.state.handler.state.dragging) {
-                        this.setState({selected: this.state.handler.state.select})
+                    handler.setState({select:!e.shiftKey})
+                    handler.setState({movement:true})
+                    if (handler.state.dragging) {
+                        data[r+starting][c] = handler.state.select
                     }
                 }}
                 onMouseUp={(e)=>{
-                    if (!this.state.handler.state.movement) {
-                        this.setState({selected: !this.state.handler.state.previous})
+                    if (!handler.state.movement) {
+                        data[r+starting][c] = !handler.state.previous
                     }
-                    this.state.handler.setState({dragging:false, movement:false})
+                    handler.setState({dragging:false, movement:false})
                 }}
             >
-            </button>
+            </td>
         )
     }
 }
