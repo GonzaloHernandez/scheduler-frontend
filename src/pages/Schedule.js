@@ -27,9 +27,9 @@ class Schedule extends React.Component {
         let matrix = Array(48).fill().map(()=>Array(7).fill())
 
         let i=0
-        for (let r=0; r<48; r++) {
-            for (let c=0; c<7; c++) {
-                matrix[r][c] = parseInt(info[i++])
+        for (let c=0; c<7; c++) {
+            for (let r=0; r<48; r++) {
+                matrix[c][r] = parseInt(info[i++])
             }
         }
 

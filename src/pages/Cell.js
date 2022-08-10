@@ -20,7 +20,7 @@ class Cell extends React.Component {
 
         return (
             <td
-                className={data[r+starting][c]?"cell-on":"cell-off"}
+                className={data[c][r+starting]?"cell-on":"cell-off"}
                 onWheel={(e)=>{
                     if (e.deltaY<0 && starting>1) {
                         handler.setState({starting: starting-2})
@@ -33,7 +33,7 @@ class Cell extends React.Component {
                     handler.setState({
                         dragging: true,
                         movement: false,
-                        previous: data[r+starting][c]
+                        previous: data[c][r+starting]
                     })
                 }}
 
@@ -41,12 +41,12 @@ class Cell extends React.Component {
                     handler.setState({select:!e.shiftKey})
                     handler.setState({movement:true})
                     if (handler.state.dragging) {
-                        data[r+starting][c] = handler.state.select
+                        data[c][r+starting] = handler.state.select
                     }
                 }}
                 onMouseUp={(e)=>{
                     if (!handler.state.movement) {
-                        data[r+starting][c] = !handler.state.previous
+                        data[c][r+starting] = !handler.state.previous
                     }
                     handler.setState({dragging:false, movement:false})
                 }}
