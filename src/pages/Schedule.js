@@ -36,7 +36,8 @@ class Schedule extends React.Component {
         this.state={
             data: matrix,
             starting: 14,
-            size: 28,
+            size: 30,
+            today: new Date(),
             // For selection activity
             dragging: false,
             select: true,
@@ -48,8 +49,13 @@ class Schedule extends React.Component {
     render() {
         const starting = this.state.starting
         const size = this.state.size
+        const today = this.state.today
         const rows = Array.from(Array(size).keys())
-        const titles = ["MON","TUE","WED","THU","FRI","SAT","SUN"]
+        const days = ["MON","TUE","WED","THU","FRI","SAT","SUN"]
+        const months = ["Juanuary","February","March","April","May","June","July",
+                        "August","September","Octuber","November","December"]
+        const firstday = today.getDate() - today.getDay() + 1
+        const lastday = (new Date(today.getFullYear(), today.getMonth(), 0)).getDate()
 
         const houres = []
         houres[0] = "12:00 AM"
@@ -64,22 +70,46 @@ class Schedule extends React.Component {
         houres[12] = "12:00 PM"
         houres[24] = "12:00 AM"
 
+        let numberdays = []
+        for (let i=0,n=1; i<7; i++) {
+            if (firstday+i<=lastday)
+                numberdays[i] = firstday+i
+            else if (firstday+i===lastday+i)
+                numberdays[i] = n++
+            else
+            numberdays[i] = n++
+        }
+
         return(
             <table>
-            <tr><th></th>{titles.map((t)=><th>{t}</th>)}</tr>
-            {rows.map((r,ri)=>{
-                return <tr>
-                <td 
-                    rowSpan={2} 
-                    hidden={r%2===1?true:false}
-                    className={r+starting<=12||r+starting>40?"night":""}>
-                    {houres[(r+starting)/2]}
-                </td>
-                {titles.map((c,ci)=>{
-                    return <Cell handler={this} r={r} c={ci}/>
-                })}
+                {/***************** Titile *****************/}
+                <tr>
+                    <th colSpan={8} className="title">
+                        {months[today.getMonth()]} / {today.getFullYear()}
+                    </th>
                 </tr>
-            })}
+                {/***************** Subtitile **************/}
+                <tr><th></th>
+                    {days.map((t,ti)=>
+                        <th className={ti+firstday===today.getDate()?"today":""}>
+                            {t} {numberdays[ti]}
+                        </th>
+                    )}
+                </tr>
+                {/***************** Rows (Houres) **********/}
+                {rows.map((r,ri)=>{
+                    return <tr>
+                    <td 
+                        rowSpan={2}
+                        hidden={r%2===1?true:false}
+                        className={r+starting<=12||r+starting>42?"night":""}>
+                        {houres[(r+starting)/2]}
+                    </td>
+                    {days.map((c,ci)=>{
+                        return <Cell handler={this} r={r} c={ci}/>
+                    })}
+                    </tr>
+                })}
             </table>
         )
     }

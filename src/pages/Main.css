@@ -1,14 +1,30 @@
 table {
-    width: 600px;
-    border: 1px solid;
+    width: 670px;
+    /* border: 1px solid; */
+    border-color: rgb(48, 109, 91);
     border-collapse: collapse;
     color: rgb(84, 84, 84);
-    padding: 0px;
 }
+
+/****************** Title *******************/
+
+.title {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 20px;
+    height: 30px;
+    user-select: none;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    border-bottom: 1px solid;
+    background-color: rgb(87, 130, 104);
+}
+
+/****************** Subtitle ****************/
 
 th {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 16px;
+    font-size: 18px;
+    text-align: center;
     height: 30px;
     user-select: none;
 }
@@ -17,15 +33,12 @@ th:nth-child(8) {
     color: red;
 }
 
-tr:nth-child(2n) td {
-    border-top: 1px solid;
-    border-color: rgb(173, 198, 179);
+.today {
+    color: rgb(255, 255, 255);
+    background-color: rgb(89, 205, 128);
 }
 
-tr:nth-child(2n+1) td {
-    border-top: 1px dashed;
-    border-color: rgb(173, 198, 179);
-}
+/****************** Rows *********************/
 
 td:nth-child(n+2) {
     width: 80px;
@@ -33,12 +46,13 @@ td:nth-child(n+2) {
     text-align: center;
     font-size: 8px;
     user-select: none;
-    border-left: 1px solid;
+    border: 1px solid;
+    border-color: rgb(191, 210, 201);
 }
 
 td:nth-child(1) {
-    width: 70px;
-    text-align: center;
+    width: 55px;
+    text-align: left;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 13px;
     user-select: none;
@@ -49,10 +63,16 @@ td:nth-child(1) {
     color: rgb(181, 180, 180);
 }
 
-.cell-off {
-    background-color: transparent;
+/****************** Cells selection **********/
+
+.cell-off1 {
+    background-color: rgb(238, 244, 242)
+}
+
+.cell-off2 {
+    background-color: rgb(255, 255, 255)
 }
 
 .cell-on {
-    background-color: rgb(172, 198, 194)
+    background-color: rgb(128, 170, 163)
 }

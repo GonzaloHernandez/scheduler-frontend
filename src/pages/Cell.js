@@ -20,7 +20,10 @@ class Cell extends React.Component {
 
         return (
             <td
-                className={data[c][r+starting]?"cell-on":"cell-off"}
+                className={
+                    data[c][r+starting]?
+                        "cell-on":
+                    (r+starting)%4===0||((r+starting)-1)%4===0?"cell-off2":"cell-off1"}
                 onWheel={(e)=>{
                     if (e.deltaY<0 && starting>1) {
                         handler.setState({starting: starting-2})
@@ -29,14 +32,16 @@ class Cell extends React.Component {
                         handler.setState({starting: starting+2})
                     }
                 }}
-                onMouseDown={(e)=>{
-                    handler.setState({
-                        dragging: true,
-                        movement: false,
-                        previous: data[c][r+starting]
-                    })
-                }}
 
+                onMouseDown={(e)=>{
+                    if (e.button === 0) { // left click
+                        handler.setState({
+                            dragging: true,
+                            movement: false,
+                            previous: data[c][r+starting]
+                        })
+                    }
+                }}
                 onMouseMove={(e)=>{
                     handler.setState({select:!e.shiftKey})
                     handler.setState({movement:true})
