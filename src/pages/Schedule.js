@@ -23,15 +23,15 @@ class Schedule extends React.Component {
         const today = new Date()
 
         this.state={
-            data: array,
-            starting: 14,
-            size: 30,
-            firstdate: (new Date(today)).setDate(today.getDate()-today.getDay() + 1),
+            data        : array,
+            starting    : 14,
+            size        : 30,
+            firstdate   : today, //(new Date(today)).setDate(today.getDate()-today.getDay() + 1),
             // For selection activity
-            dragging: false,
-            select: true,
-            movement: false,
-            previous: false,
+            dragging    : false,
+            select      : true,
+            movement    : false,
+            previous    : false,
         }
     }
     //----------------------------------------------------
@@ -96,6 +96,7 @@ class Schedule extends React.Component {
                     </td>
                     {days.map((c,ci)=>{
                         return <Cell handler={this} r={ri} c={ci}/>
+                        // return <td handler={this} r={ri} c={ci}> {ri},{ci} </td>
                     })}
                     </tr>
                 })}
