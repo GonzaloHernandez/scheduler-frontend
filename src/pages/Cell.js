@@ -13,12 +13,16 @@ class Cell extends React.Component {
         }
     }
     //---------------------------------------------------
+    static getDerivedStateFromProps(props, state) {
+        return {value: props.value };
+    }
+    //---------------------------------------------------
     render() {
         const handler   = this.state.handler
         const r         = this.state.r
         const value     = this.state.value
         const starting  = handler.state.starting
-        let   data      = handler.state.data 
+        let   data      = handler.state.data
 
         return (
             <td
@@ -32,36 +36,41 @@ class Cell extends React.Component {
                         handler.setState({
                             dragging: true,
                             movement: false,
-                            previous: data.find(v=>v===value)?true:false //data[c][r+starting]
+                            previous: data.find(v=>v===value)?true:false 
                         })
-                    }
+                      }
                 }}
                 onMouseMove={(e)=>{
                     handler.setState({select:!e.shiftKey})
                     handler.setState({movement:true})
                     if (handler.state.dragging) {
-                        //data[c][r+starting] = handler.state.select
                         if (!e.shiftKey) {
                             if (!data.find(v=>v===value)) {
                                 data.push(value)
                             }
                         } else {
-                            data = data.filter(v=>v!==value)
+                            const found = data.indexOf(value)
+                            if (found >= 0) {
+                                data.splice(found, 1)
+                            }
                         }
                     }
                 }}
                 onMouseUp={(e)=>{
                     if (!handler.state.movement) {
-                        if (handler.state.previous)
-                            data = data.filter(v=>v!==value)
+                        if (handler.state.previous) {
+                            const found = data.indexOf(value)
+                            if (found >= 0) {
+                                data.splice(found, 1)
+                            }
+                        }
                         else
                             data.push(value)
-                        // data[c][r+starting] = !handler.state.previous   //****************** im here */
                     }
                     handler.setState({dragging:false, movement:false})
                 }}
             >
-                {value}
+                
             </td>
         )
     }

@@ -15,18 +15,18 @@ class Schedule extends React.Component {
         //     console.log("Recovery failure")            
         // })
 
-        const info ="16603704,16603758,16603740,16603794,16603776,16603830,16603812,16603866,16603848,16603902,16603884,16603938,16603920,16603974,16603956,16604010,16603992,16604046,16604028,16604082,16604064,16604118,16604100,16604154,16604136,16604190,16604172,16604226"
+        const info ="16578900,16603758,16603740,16603794,16603776,16603830,16603812,16603866,16603848,16603902,16603884,16603938,16603920,16603974,16603956,16604010,16603992,16604046,16604028,16604082,16604064,16604118,16604100,16604154,16604136,16604190,16604172,16604226"
             
         let array = []
         info.split(",").map( (t,i) => array[i]=parseInt(t))
 
-         const today = new Date()
+        const currentdate = new Date()
 
         this.state={
             data        : array,
             starting    : 14,
             size        : 30,
-            firstdate   : today, //(new Date(today)).setDate(today.getDate()-today.getDay() + 1),
+            firstdate   : new Date(currentdate.setDate(currentdate.getDate()-currentdate.getDay() + 1)),
             // For selection activity
             dragging    : false,
             select      : true,
@@ -83,7 +83,17 @@ class Schedule extends React.Component {
                 {/***************** Titile *****************/}
                 <tr>
                     <th colSpan={8} className="title">
-                        {months[today.getMonth()]} / {today.getFullYear() }
+                        <button
+                            onClick={(e)=>{
+                                this.setState({firstdate   : new Date(firstdate.setDate(firstdate.getDate()-7))})
+                            }}
+                        > {"<"} </button>
+                        ... {months[firstdate.getMonth()]} / {firstdate.getFullYear() } ...
+                        <button
+                            onClick={(e)=>{
+                                this.setState({firstdate   : new Date(firstdate.setDate(firstdate.getDate()+7))})
+                            }}
+                        > {">"} </button>
                     </th>
                 </tr>
                 {/***************** Subtitile **************/}
@@ -111,12 +121,13 @@ class Schedule extends React.Component {
                         const m         = currentdate.getMonth()
                         const d         = currentdate.getDate()
                         const h         = (starting+ri)/2
+                        const u         = (starting+ri)%2
 
-                        const txtdate   = (y + "-" + ("0"+m).slice(-2) + "-" + ("0"+d).slice(-2) + "T" + ("0"+h).slice(-2) + ":" + (h%10===0?"00":"30") + ":00")
+                        const txtdate   = (y + "-" + ("0"+m).slice(-2) + "-" + ("0"+d).slice(-2) + "T" + 
+                                            ("0"+parseInt(h)).slice(-2) + ":" + (u===0?"00":"30") + ":00")
                         const value     = Date.parse(txtdate)/100000
 
-                        return <Cell handler={this} r={ri} c={ci} value={h}/>
-                        // return <td handler={this} r={ri} c={ci}> {ri},{ci} {h} </td>
+                        return <Cell handler={this} r={ri} c={ci} value={value}/>
                     })}
                     </tr>
                 })}
