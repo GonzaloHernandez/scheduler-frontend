@@ -20,7 +20,7 @@ class Schedule extends React.Component {
         let array = []
         info.split(",").map( (t,i) => array[i]=parseInt(t))
 
-        const today = new Date()
+         const today = new Date()
 
         this.state={
             data        : array,
@@ -70,11 +70,20 @@ class Schedule extends React.Component {
         }
 
         return(
-            <table>
+            <table
+                onWheel={(e)=>{
+                    if (e.deltaY<0 && starting>1) {
+                        this.setState({starting: starting-2})
+                        }
+                    else if (e.deltaY>0 && starting<48-size) {
+                        this.setState({starting: starting+2})
+                    }
+                }}
+            >
                 {/***************** Titile *****************/}
                 <tr>
                     <th colSpan={8} className="title">
-                        {months[today.getMonth()]} / {today.getFullYear()}
+                        {months[today.getMonth()]} / {today.getFullYear() }
                     </th>
                 </tr>
                 {/***************** Subtitile **************/}
@@ -95,8 +104,19 @@ class Schedule extends React.Component {
                         {houres[(r+starting)/2]}
                     </td>
                     {days.map((c,ci)=>{
-                        return <Cell handler={this} r={ri} c={ci}/>
-                        // return <td handler={this} r={ri} c={ci}> {ri},{ci} </td>
+
+                        const currentdate   = new Date(firstdate)
+                        currentdate.setDate(firstdate.getDate()+ci)
+                        const y         = currentdate.getFullYear()
+                        const m         = currentdate.getMonth()
+                        const d         = currentdate.getDate()
+                        const h         = (starting+ri)/2
+
+                        const txtdate   = (y + "-" + ("0"+m).slice(-2) + "-" + ("0"+d).slice(-2) + "T" + ("0"+h).slice(-2) + ":" + (h%10===0?"00":"30") + ":00")
+                        const value     = Date.parse(txtdate)/100000
+
+                        return <Cell handler={this} r={ri} c={ci} value={h}/>
+                        // return <td handler={this} r={ri} c={ci}> {ri},{ci} {h} </td>
                     })}
                     </tr>
                 })}
