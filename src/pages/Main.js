@@ -1,6 +1,12 @@
 import React from "react";
 import Schedule from "./Schedule";
-import "./Main.css"
+// import "./Main.css"
+if (window.innerWidth <500) {
+   import("./Main-mobile.css") 
+} else {
+    import("./Main.css") 
+}
+
 
 class Main extends React.Component {
     render() {

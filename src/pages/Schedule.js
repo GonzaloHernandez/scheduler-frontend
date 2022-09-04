@@ -33,6 +33,9 @@ class Schedule extends React.Component {
             movement    : false,
             previous    : false,
         }
+
+        this.touchx=0
+        this.touchy=0
     }
     //----------------------------------------------------
     render() {
@@ -78,6 +81,19 @@ class Schedule extends React.Component {
                     else if (e.deltaY>0 && starting<48-size) {
                         this.setState({starting: starting+2})
                     }
+                }}
+                onTouchStart={(e)=>{
+                    this.touchy = e.targetTouches[0].clientY
+                }}
+                onTouchMove={(e)=>{
+                    if (e.targetTouches.length === 2) return
+                        if (e.targetTouches[0].clientY > this.touchy+10 && starting>1) {
+                            this.setState({starting: starting-2})
+                        } else if (e.targetTouches[0].clientY < this.touchy-10 && starting<48-size) {
+                            this.setState({starting: starting+2})
+                        }
+                        this.touchy = e.targetTouches[0].clientY
+                    // }
                 }}
             >
                 {/***************** Titile *****************/}
